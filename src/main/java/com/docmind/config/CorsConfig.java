@@ -9,18 +9,23 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 public class CorsConfig implements WebMvcConfigurer {
 
-    private final AppProperties appProperties;
+    private  final AppProperties appProperties;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        String[] allowedOrigins = appProperties.getCors().getAllowedOrigins().split(",");
-        String[] allowedMethods = appProperties.getCors().getAllowedMethods().split(",");
-        String[] allowedHeaders = appProperties.getCors().getAllowedHeaders().split(",");
+
+        String[] allowedOrigins= appProperties.getCors().getAllowedOrigins().split(",");
+        String[] allowedMethods= appProperties.getCors().getAllowedMethods().split(",");
+        String[] allowedHeaders= appProperties.getCors().getAllowedHeaders().split(",");
+
 
         registry.addMapping("/api/**")
                 .allowedOriginPatterns(allowedOrigins)
-                .allowedHeaders(allowedHeaders)
                 .allowedMethods(allowedMethods)
-                .allowCredentials(true);
+                .allowedHeaders(allowedHeaders)
+                .allowCredentials(true)
+                .maxAge(3600);
+
+
     }
 }

@@ -39,9 +39,14 @@ public class SecurityConfig {
             throws Exception {
 
         http.csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers(
+                                "/api/v1/auth/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html").permitAll()
                         .requestMatchers("/api/v1/admin/**").hasRole(Role.ADMIN.toString())
                         .requestMatchers("/api/v1/**").hasRole(Role.USER.toString())
                         .anyRequest()
