@@ -78,11 +78,10 @@ public class JpaChatMemory implements ChatMemory {
     @Override
     @Transactional(readOnly = true)
     public List<Message> get(String conversationId) {
-        List<ChatMessage> all = chatMessageRepository.findAll();
+        List<ChatMessage> all = chatMessageRepository.findByConversation_IdOrderByCreatedAtAsc(conversationId);
         if(all == null ||  all.isEmpty()){
             return Collections.emptyList();
         }
-        Collections.reverse(all);
 
         List<Message> springAIMessages = new ArrayList<>();
         for (ChatMessage chatMessage : all){

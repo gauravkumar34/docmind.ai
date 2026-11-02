@@ -74,11 +74,11 @@ public class RagService {
                 .prompt()
                 .system(s -> s.param("doc_context", contextText))
                 .user(request.getQuestion())
-                .advisors(a -> a.param(ChatMemory.CONVERSATION_ID, request.getConversationId()))
+                .advisors(a -> a.param(ChatMemory.CONVERSATION_ID, conversationId))
                 .call().content();
         long responseTime = System.currentTimeMillis() - startTime;
         log.info("Completed Q&A in {} ms with {} citations", responseTime, citationDtos.size());
-        return ChatResponseDto.builder().answer(answer).conversationId(request.getConversationId() != null ? request.getConversationId() : UUID.randomUUID().toString()).citations(citationDtos).responseTimeMs(responseTime).build();
+        return ChatResponseDto.builder().answer(answer).conversationId(conversationId).citations(citationDtos).responseTimeMs(responseTime).build();
 
 
     }
@@ -236,14 +236,14 @@ public class RagService {
             filterExpression =
                     b.and(
 //                            introduced userId filter
-                            b.eq("userId", user.getId().toString()),
+                            b.eq("user_id", user.getId().toString()),
                             b.eq("documentId", documentId.toString())
 
                     ).build();
 
         } else {
             // introduced userId filter
-            filterExpression = b.eq("userId", user.getId().toString()).build();
+            filterExpression = b.eq("user_id", user.getId().toString()).build();
 
         }
         searchRequestBuilder.filterExpression(filterExpression);
