@@ -111,8 +111,8 @@ const CodeBlock: React.FC<{ language: string; code: string }> = ({ language, cod
   const tokens = grammar ? Prism.tokenize(code, grammar) : [code];
 
   return (
-    <div className="my-3 rounded-xl border border-[#334155] bg-[#090d16] overflow-hidden text-xs shadow-md">
-      <div className="flex items-center justify-between px-3.5 py-2 bg-[#141d2e] border-b border-[#334155] text-slate-400 font-mono text-[11px]">
+    <div className="code-block my-3 rounded-xl border border-slate-700 bg-slate-950 overflow-hidden text-xs shadow-md">
+      <div className="flex items-center justify-between px-3.5 py-2 bg-slate-850 border-b border-slate-700 text-slate-400 font-mono text-[11px]">
         <div className="flex items-center gap-2">
           <div className="flex gap-1.5">
             <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
@@ -123,7 +123,7 @@ const CodeBlock: React.FC<{ language: string; code: string }> = ({ language, cod
         </div>
         <button
           onClick={handleCopy}
-          className="flex items-center gap-1.5 text-[11px] text-slate-400 hover:text-white px-2 py-1 rounded bg-[#1e293b] hover:bg-[#334155] transition-colors cursor-pointer"
+          className="flex items-center gap-1.5 text-[11px] text-slate-400 hover:text-slate-50 px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 transition-colors cursor-pointer"
         >
           {copied ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
           <span>{copied ? 'Copied!' : 'Copy'}</span>
@@ -149,10 +149,10 @@ const MarkdownContent: React.FC<{ content: string; isStreaming?: boolean }> = ({
             return <p className="mb-2.5 last:mb-0 leading-relaxed text-slate-200">{children}</p>;
           },
           h1({ children }) {
-            return <h1 className="text-xl font-bold text-white mt-4 mb-2 pb-1 border-b border-[#334155] first:mt-0">{children}</h1>;
+            return <h1 className="text-xl font-bold text-slate-50 mt-4 mb-2 pb-1 border-b border-slate-700 first:mt-0">{children}</h1>;
           },
           h2({ children }) {
-            return <h2 className="text-lg font-bold text-white mt-3.5 mb-1.5 first:mt-0">{children}</h2>;
+            return <h2 className="text-lg font-bold text-slate-50 mt-3.5 mb-1.5 first:mt-0">{children}</h2>;
           },
           h3({ children }) {
             return <h3 className="text-base font-semibold text-slate-100 mt-3 mb-1 first:mt-0">{children}</h3>;
@@ -177,7 +177,7 @@ const MarkdownContent: React.FC<{ content: string; isStreaming?: boolean }> = ({
             );
           },
           hr() {
-            return <hr className="border-[#334155] my-3.5" />;
+            return <hr className="border-slate-700 my-3.5" />;
           },
           a({ href, children }) {
             return (
@@ -192,7 +192,7 @@ const MarkdownContent: React.FC<{ content: string; isStreaming?: boolean }> = ({
             );
           },
           strong({ children }) {
-            return <strong className="font-semibold text-white">{children}</strong>;
+            return <strong className="font-semibold text-slate-50">{children}</strong>;
           },
           em({ children }) {
             return <em className="italic text-slate-300">{children}</em>;
@@ -202,19 +202,19 @@ const MarkdownContent: React.FC<{ content: string; isStreaming?: boolean }> = ({
           },
           table({ children }) {
             return (
-              <div className="my-3 overflow-x-auto rounded-xl border border-[#334155] shadow-sm">
-                <table className="min-w-full divide-y divide-[#334155] text-left text-xs">{children}</table>
+              <div className="my-3 overflow-x-auto rounded-xl border border-slate-700 shadow-sm">
+                <table className="min-w-full divide-y divide-slate-700 text-left text-xs">{children}</table>
               </div>
             );
           },
           thead({ children }) {
-            return <thead className="bg-[#141d2e]">{children}</thead>;
+            return <thead className="bg-slate-850">{children}</thead>;
           },
           tbody({ children }) {
-            return <tbody className="divide-y divide-[#1e293b] bg-[#090d16]">{children}</tbody>;
+            return <tbody className="divide-y divide-slate-800 bg-slate-950">{children}</tbody>;
           },
           th({ children }) {
-            return <th className="px-3.5 py-2.5 font-semibold text-white">{children}</th>;
+            return <th className="px-3.5 py-2.5 font-semibold text-slate-50">{children}</th>;
           },
           td({ children }) {
             return <td className="px-3.5 py-2 text-slate-300">{children}</td>;
@@ -227,7 +227,7 @@ const MarkdownContent: React.FC<{ content: string; isStreaming?: boolean }> = ({
               return <CodeBlock language={match ? match[1] : ''} code={codeString} />;
             }
             return (
-              <code className="px-1.5 py-0.5 mx-0.5 bg-[#090d16] text-indigo-300 rounded text-[13px] font-mono border border-[#334155]">
+              <code className="px-1.5 py-0.5 mx-0.5 bg-slate-950 text-indigo-300 rounded text-[13px] font-mono border border-slate-700">
                 {children}
               </code>
             );
@@ -256,7 +256,7 @@ const CitationCard: React.FC<{ citation: CitationDto; index: number }> = ({ cita
   const extColors: Record<string, string> = { pdf: 'text-red-400', docx: 'text-blue-400', csv: 'text-green-400', md: 'text-purple-400' };
 
   return (
-    <div className="border border-[#334155] rounded-xl overflow-hidden bg-[#0f172a] hover:border-[#475569] transition-colors">
+    <div className="border border-slate-700 rounded-xl overflow-hidden bg-slate-900 hover:border-slate-600 transition-colors">
       <button
         onClick={() => setExpanded(!expanded)}
         className="w-full flex items-center gap-2.5 p-2.5 text-left cursor-pointer"
@@ -272,7 +272,7 @@ const CitationCard: React.FC<{ citation: CitationDto; index: number }> = ({ cita
           </div>
           {/* Similarity bar */}
           <div className="flex items-center gap-2 mt-1">
-            <div className="flex-1 h-1 bg-[#1e293b] rounded-full overflow-hidden">
+            <div className="flex-1 h-1 bg-slate-800 rounded-full overflow-hidden">
               <div className={clsx('h-1 rounded-full', barColor)} style={{ width: `${pct}%` }} />
             </div>
             <span className={clsx('text-[10px] font-bold flex-shrink-0', textColor)}>{pct}%</span>
@@ -281,7 +281,7 @@ const CitationCard: React.FC<{ citation: CitationDto; index: number }> = ({ cita
         {expanded ? <ChevronUp className="w-3.5 h-3.5 text-slate-500 flex-shrink-0" /> : <ChevronDown className="w-3.5 h-3.5 text-slate-500 flex-shrink-0" />}
       </button>
       {expanded && (
-        <div className="px-3 pb-3 pt-0 border-t border-[#1e293b] animate-fade-in">
+        <div className="px-3 pb-3 pt-0 border-t border-slate-800 animate-fade-in">
           <p className="text-xs text-slate-400 leading-relaxed mt-2">{citation.snippet}</p>
         </div>
       )}
@@ -329,7 +329,7 @@ const MessageBubble: React.FC<{ message: ConversationMessage }> = ({ message }) 
           'rounded-2xl px-4 py-3 text-sm',
           isUser
             ? 'bg-indigo-600 text-white rounded-tr-sm shadow-sm shadow-indigo-500/20'
-            : 'bg-[#1e293b] border border-[#334155] rounded-tl-sm'
+            : 'bg-slate-800 border border-slate-700 rounded-tl-sm'
         )}>
           {isUser ? (
             <p className="text-white leading-relaxed whitespace-pre-wrap">{message.content}</p>
@@ -396,7 +396,7 @@ const TypingIndicator = () => (
     <div className="w-8 h-8 flex-shrink-0 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
       <Bot className="w-3.5 h-3.5 text-white" />
     </div>
-    <div className="bg-[#1e293b] border border-[#334155] rounded-2xl rounded-tl-sm px-4 py-3">
+    <div className="bg-slate-800 border border-slate-700 rounded-2xl rounded-tl-sm px-4 py-3">
       <div className="flex items-center gap-1 h-4">
         <div className="typing-dot" />
         <div className="typing-dot" />
@@ -703,14 +703,14 @@ const ChatView: React.FC = () => {
   const charCount = input.length;
 
   return (
-    <div className="flex flex-col h-full bg-[#0f172a]">
+    <div className="flex flex-col h-full bg-slate-900">
       {/* ── Chat header ── */}
-      <div className="flex items-center justify-between px-6 py-3 border-b border-[#1e293b] flex-shrink-0 bg-[#111827]">
+      <div className="flex items-center justify-between px-6 py-3 border-b border-slate-800 flex-shrink-0 bg-slate-900">
         <div className="flex items-center gap-2.5">
           <div className="w-6 h-6 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
             <Sparkles className="w-3 h-3 text-white" />
           </div>
-          <span className="text-sm font-semibold text-white">
+          <span className="text-sm font-semibold text-slate-50">
             {selectedDoc ? selectedDoc.filename : 'All Documents'}
           </span>
           {selectedDoc && (
@@ -728,7 +728,7 @@ const ChatView: React.FC = () => {
               'flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border transition-all cursor-pointer',
               streamingMode
                 ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20'
-                : 'bg-[#1e293b] border-[#334155] text-slate-400 hover:text-white'
+                : 'bg-slate-800 border-slate-700 text-slate-400 hover:text-slate-50'
             )}
             title={streamingMode ? 'Streaming ON — click to disable' : 'Streaming OFF — click to enable'}
           >
@@ -741,7 +741,7 @@ const ChatView: React.FC = () => {
           {messages.length > 0 && (
             <button
               onClick={handleNewChat}
-              className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-white border border-[#334155] hover:border-[#475569] px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-50 border border-slate-700 hover:border-slate-600 px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
             >
               <RotateCcw className="w-3 h-3" /> New chat
             </button>
@@ -761,7 +761,7 @@ const ChatView: React.FC = () => {
                   <Bot className="w-8 h-8 text-white" />
                 </div>
               </div>
-              <h2 className="text-2xl font-bold text-white mb-2">DocMind AI</h2>
+              <h2 className="text-2xl font-bold text-slate-50 mb-2">DocMind AI</h2>
               <p className="text-slate-400 text-sm leading-relaxed max-w-sm mx-auto">
                 {selectedDoc
                   ? `Chatting with "${selectedDoc.filename}". Ask anything or pick a template below.`
@@ -787,7 +787,7 @@ const ChatView: React.FC = () => {
                       <button
                         key={t.label}
                         onClick={() => sendMessage(t.prompt)}
-                        className="text-left p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/8 hover:border-white/15 transition-all text-xs text-slate-200 hover:text-white group cursor-pointer"
+                        className="text-left p-3 rounded-xl bg-slate-50/5 hover:bg-slate-50/10 border border-slate-50/8 hover:border-slate-50/15 transition-all text-xs text-slate-200 hover:text-slate-50 group cursor-pointer"
                       >
                         <span className="font-medium block mb-0.5">{t.label}</span>
                         <span className="text-slate-500 text-[10px] line-clamp-2 group-hover:text-slate-400 transition-colors">{t.prompt.slice(0, 55)}…</span>
@@ -812,7 +812,7 @@ const ChatView: React.FC = () => {
       </div>
 
       {/* ── Input area ── */}
-      <div className="px-6 py-4 border-t border-[#1e293b] flex-shrink-0 bg-[#111827]">
+      <div className="px-6 py-4 border-t border-slate-800 flex-shrink-0 bg-slate-900">
         {/* Streaming status */}
         {isStreaming && (
           <div className="flex items-center gap-2 mb-2">
@@ -826,8 +826,8 @@ const ChatView: React.FC = () => {
         )}
 
         <div className={clsx(
-          'flex gap-3 items-end bg-[#1e293b] border rounded-2xl px-4 py-3 transition-all',
-          isBusy ? 'border-[#334155]' : 'border-[#334155] focus-within:border-indigo-500/50'
+          'flex gap-3 items-end bg-slate-800 border rounded-2xl px-4 py-3 transition-all',
+          isBusy ? 'border-slate-700' : 'border-slate-700 focus-within:border-indigo-500/50'
         )}>
           <textarea
             ref={inputRef}
@@ -843,7 +843,7 @@ const ChatView: React.FC = () => {
             }
             rows={1}
             disabled={isBusy}
-            className="flex-1 bg-transparent text-sm text-white placeholder-slate-500 resize-none outline-none leading-relaxed disabled:opacity-60"
+            className="flex-1 bg-transparent text-sm text-slate-50 placeholder-slate-500 resize-none outline-none leading-relaxed disabled:opacity-60"
             style={{ minHeight: '24px', maxHeight: '144px' }}
             onInput={(e) => {
               const t = e.currentTarget;

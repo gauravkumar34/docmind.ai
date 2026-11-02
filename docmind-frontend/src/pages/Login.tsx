@@ -4,6 +4,7 @@ import { Brain, Lock, User, ArrowRight, Loader2, Sparkles, Eye, EyeOff } from 'l
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { useAuthStore } from '../store/authStore';
+import ThemeToggle from '../components/ThemeToggle';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -51,6 +52,7 @@ const Login: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <ThemeToggle className="absolute top-4 right-4 z-10" />
       {/* Background glowing effects */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-gradient-to-tr from-indigo-600/15 via-purple-600/10 to-transparent blur-[140px] rounded-full pointer-events-none" />
 
@@ -66,7 +68,7 @@ const Login: React.FC = () => {
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-2xl font-bold text-white tracking-tight">DocMind</span>
+              <span className="text-2xl font-bold text-slate-50 tracking-tight">DocMind</span>
               <span className="text-xs font-semibold text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-full">
                 AI
               </span>
@@ -75,7 +77,7 @@ const Login: React.FC = () => {
           </div>
         </div>
 
-        <h2 className="mt-4 text-center text-2xl font-bold tracking-tight text-white">
+        <h2 className="mt-4 text-center text-2xl font-bold tracking-tight text-slate-50">
           Sign in to your account
         </h2>
         <p className="mt-2 text-center text-sm text-slate-400">
@@ -113,7 +115,7 @@ const Login: React.FC = () => {
                   onBlur={() => setTouched((prev) => ({ ...prev, username: true }))}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="Enter your username"
-                  className="block w-full pl-10 pr-3 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm transition-all"
+                  className="block w-full pl-10 pr-3 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-slate-50 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm transition-all"
                 />
               </div>
               {usernameError && (
@@ -137,7 +139,7 @@ const Login: React.FC = () => {
                   onBlur={() => setTouched((prev) => ({ ...prev, password: true }))}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="block w-full pl-10 pr-10 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm transition-all"
+                  className="block w-full pl-10 pr-10 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-slate-50 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm transition-all"
                 />
                 <button
                   type="button"

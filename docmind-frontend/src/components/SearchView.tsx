@@ -37,21 +37,21 @@ const ResultCard: React.FC<{ match: CitationDto; index: number }> = ({ match, in
   const { bar, badge, label } = getScoreColor(score);
 
   return (
-    <div className="border border-[#334155] rounded-xl overflow-hidden bg-[#1e293b] hover:border-[#475569] transition-all duration-200 animate-fade-in group">
+    <div className="border border-slate-700 rounded-xl overflow-hidden bg-slate-800 hover:border-slate-600 transition-all duration-200 animate-fade-in group">
       {/* Top color accent strip */}
       <div className={clsx('h-0.5 w-full', bar)} />
 
       <div className="p-4">
         {/* Header row */}
         <div className="flex items-start gap-3 mb-3">
-          <div className="flex-shrink-0 w-7 h-7 bg-[#0f172a] border border-[#334155] rounded-lg flex items-center justify-center text-xs font-bold text-slate-400 group-hover:border-indigo-500/40 transition-colors">
+          <div className="flex-shrink-0 w-7 h-7 bg-slate-900 border border-slate-700 rounded-lg flex items-center justify-center text-xs font-bold text-slate-400 group-hover:border-indigo-500/40 transition-colors">
             {index + 1}
           </div>
 
           <div className="flex-1 min-w-0">
             <div className="flex items-center justify-between gap-2 flex-wrap">
               <div>
-                <p className="text-sm font-semibold text-white truncate max-w-xs">{match.fileName}</p>
+                <p className="text-sm font-semibold text-slate-50 truncate max-w-xs">{match.fileName}</p>
                 <div className="flex items-center gap-2 mt-0.5">
                   {match.pageNumber && (
                     <span className="text-xs text-slate-500 flex items-center gap-0.5">
@@ -74,7 +74,7 @@ const ResultCard: React.FC<{ match: CitationDto; index: number }> = ({ match, in
         </div>
 
         {/* Similarity bar */}
-        <div className="w-full bg-[#0f172a] rounded-full h-1 mb-3">
+        <div className="w-full bg-slate-900 rounded-full h-1 mb-3">
           <div className={clsx('h-1 rounded-full transition-all duration-500', bar)} style={{ width: `${pct}%` }} />
         </div>
 
@@ -94,12 +94,12 @@ const ResultCard: React.FC<{ match: CitationDto; index: number }> = ({ match, in
 
         {/* Metadata pills */}
         {match.metadata && Object.keys(match.metadata).length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-[#334155]/60">
+          <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-slate-700/60">
             {Object.entries(match.metadata)
               .filter(([k]) => !['documentId', 'fileName', 'snippet'].includes(k))
               .slice(0, 5)
               .map(([k, v]) => (
-                <span key={k} className="inline-flex items-center gap-1 text-xs bg-[#0f172a] text-slate-400 px-2 py-0.5 rounded-full border border-[#334155]">
+                <span key={k} className="inline-flex items-center gap-1 text-xs bg-slate-900 text-slate-400 px-2 py-0.5 rounded-full border border-slate-700">
                   <Tag className="w-2.5 h-2.5" />
                   <span className="text-slate-500">{k}:</span> {String(v)}
                 </span>
@@ -147,16 +147,16 @@ const SearchView: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col h-full overflow-hidden bg-[#0f172a]">
+    <div className="flex flex-col h-full overflow-hidden bg-slate-900">
       {/* Search header */}
-      <div className="px-6 py-4 border-b border-[#1e293b] flex-shrink-0 bg-[#111827]">
+      <div className="px-6 py-4 border-b border-slate-800 flex-shrink-0 bg-slate-900">
         {/* Title row */}
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 bg-indigo-500/20 rounded-lg flex items-center justify-center">
               <Search className="w-3.5 h-3.5 text-indigo-400" />
             </div>
-            <h2 className="text-sm font-semibold text-white">Semantic Search</h2>
+            <h2 className="text-sm font-semibold text-slate-50">Semantic Search</h2>
             {selectedDoc && (
               <span className="text-xs bg-indigo-500/15 text-indigo-400 px-2 py-0.5 rounded-full border border-indigo-500/25">
                 {selectedDoc.filename}
@@ -169,7 +169,7 @@ const SearchView: React.FC = () => {
               'flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border transition-all',
               showFilters
                 ? 'bg-indigo-500/20 border-indigo-500/40 text-indigo-400'
-                : 'border-[#334155] text-slate-400 hover:text-white'
+                : 'border-slate-700 text-slate-400 hover:text-slate-50'
             )}
           >
             <SlidersHorizontal className="w-3 h-3" />
@@ -187,7 +187,7 @@ const SearchView: React.FC = () => {
                 'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all flex-shrink-0',
                 selectedType === i
                   ? COLOR_MAP[type.color] + ' shadow-sm'
-                  : 'bg-[#1e293b] border border-[#334155] text-slate-400 hover:text-white'
+                  : 'bg-slate-800 border border-slate-700 text-slate-400 hover:text-slate-50'
               )}
             >
               <span>{type.icon}</span>
@@ -198,7 +198,7 @@ const SearchView: React.FC = () => {
 
         {/* Input */}
         <div className="flex gap-2">
-          <div className="flex-1 flex items-center gap-2 bg-[#1e293b] border border-[#334155] rounded-xl px-4 py-2.5 focus-within:border-indigo-500/50 transition-colors">
+          <div className="flex-1 flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 focus-within:border-indigo-500/50 transition-colors">
             <Search className="w-4 h-4 text-slate-400 flex-shrink-0" />
             <input
               type="text"
@@ -206,10 +206,10 @@ const SearchView: React.FC = () => {
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
               placeholder={SEARCH_TYPES[selectedType].placeholder}
-              className="flex-1 bg-transparent text-sm text-white placeholder-slate-500 outline-none"
+              className="flex-1 bg-transparent text-sm text-slate-50 placeholder-slate-500 outline-none"
             />
             {query && (
-              <button onClick={() => setQuery('')} className="text-slate-500 hover:text-white transition-colors">
+              <button onClick={() => setQuery('')} className="text-slate-500 hover:text-slate-50 transition-colors">
                 <ChevronUp className="w-3.5 h-3.5 rotate-180" />
               </button>
             )}
@@ -226,7 +226,7 @@ const SearchView: React.FC = () => {
 
         {/* Advanced filters */}
         {showFilters && (
-          <div className="mt-3 p-4 bg-[#0f172a] rounded-xl border border-[#334155] animate-fade-in">
+          <div className="mt-3 p-4 bg-slate-900 rounded-xl border border-slate-700 animate-fade-in">
             <div className="grid grid-cols-2 gap-6">
               <div>
                 <div className="flex justify-between mb-2">
@@ -236,7 +236,7 @@ const SearchView: React.FC = () => {
                 <input
                   type="range" min={1} max={25} value={topK}
                   onChange={(e) => setTopK(Number(e.target.value))}
-                  className="w-full h-1.5 accent-indigo-500 bg-[#334155] rounded-full"
+                  className="w-full h-1.5 accent-indigo-500 bg-slate-700 rounded-full"
                 />
                 <div className="flex justify-between mt-1 text-[10px] text-slate-600">
                   <span>1</span><span>25</span>
@@ -250,7 +250,7 @@ const SearchView: React.FC = () => {
                 <input
                   type="range" min={0} max={1} step={0.05} value={minSimilarity}
                   onChange={(e) => setMinSimilarity(Number(e.target.value))}
-                  className="w-full h-1.5 accent-indigo-500 bg-[#334155] rounded-full"
+                  className="w-full h-1.5 accent-indigo-500 bg-slate-700 rounded-full"
                 />
                 <div className="flex justify-between mt-1 text-[10px] text-slate-600">
                   <span>0%</span><span>100%</span>
@@ -268,7 +268,7 @@ const SearchView: React.FC = () => {
               <button
                 key={q}
                 onClick={() => setQuery(q)}
-                className="text-xs bg-[#1e293b] border border-[#334155] text-slate-400 hover:text-indigo-400 hover:border-indigo-500/40 px-2.5 py-1 rounded-full transition-colors"
+                className="text-xs bg-slate-800 border border-slate-700 text-slate-400 hover:text-indigo-400 hover:border-indigo-500/40 px-2.5 py-1 rounded-full transition-colors"
               >
                 {q}
               </button>
@@ -281,7 +281,7 @@ const SearchView: React.FC = () => {
       <div className="flex-1 overflow-y-auto p-6">
         {!results && !isSearching && (
           <div className="flex flex-col items-center justify-center h-full text-center">
-            <div className="w-20 h-20 bg-[#1e293b] rounded-2xl flex items-center justify-center mb-5 border border-[#334155]">
+            <div className="w-20 h-20 bg-slate-800 rounded-2xl flex items-center justify-center mb-5 border border-slate-700">
               <Search className="w-9 h-9 text-slate-600" />
             </div>
             <h3 className="text-lg font-semibold text-slate-300 mb-2">Search your documents</h3>
@@ -307,11 +307,11 @@ const SearchView: React.FC = () => {
         {results && !isSearching && (
           <div>
             {/* Results summary bar */}
-            <div className="flex items-center justify-between mb-4 pb-4 border-b border-[#1e293b]">
+            <div className="flex items-center justify-between mb-4 pb-4 border-b border-slate-800">
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2">
                   <BarChart2 className="w-4 h-4 text-indigo-400" />
-                  <span className="text-sm font-medium text-white">
+                  <span className="text-sm font-medium text-slate-50">
                     {results.totalMatches} result{results.totalMatches !== 1 ? 's' : ''}
                   </span>
                 </div>
@@ -327,7 +327,7 @@ const SearchView: React.FC = () => {
                 ) : (
                   <button
                     onClick={() => setResults(null)}
-                    className="text-xs text-slate-500 hover:text-white transition-colors"
+                    className="text-xs text-slate-500 hover:text-slate-50 transition-colors"
                   >
                     Clear
                   </button>

@@ -16,12 +16,80 @@
   --color-error: #ef4444;
 }
 
+/* ─── Theme: slate scale is variable-driven; html.light inverts it ─── */
+/* inline so utilities read --slate-* at the element (lets .code-block stay dark) */
+@theme inline {
+  --color-slate-50: var(--slate-50);
+  --color-slate-100: var(--slate-100);
+  --color-slate-200: var(--slate-200);
+  --color-slate-300: var(--slate-300);
+  --color-slate-400: var(--slate-400);
+  --color-slate-500: var(--slate-500);
+  --color-slate-600: var(--slate-600);
+  --color-slate-700: var(--slate-700);
+  --color-slate-750: var(--slate-750);
+  --color-slate-800: var(--slate-800);
+  --color-slate-850: var(--slate-850);
+  --color-slate-900: var(--slate-900);
+  --color-slate-950: var(--slate-950);
+}
+
+:root,
+.code-block {
+  color-scheme: dark;
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-750: #283548;
+  --slate-800: #1e293b;
+  --slate-850: #141d2e;
+  --slate-900: #0f172a;
+  --slate-950: #090d16;
+}
+
+html.light {
+  color-scheme: light;
+  --slate-50: #0f172a;
+  --slate-100: #1e293b;
+  --slate-200: #1e293b;
+  --slate-300: #334155;
+  --slate-400: #475569;
+  --slate-500: #64748b;
+  --slate-600: #94a3b8;
+  --slate-700: #cbd5e1;
+  --slate-750: #dbe2ea;
+  --slate-800: #e2e8f0;
+  --slate-850: #eef2f6;
+  --slate-900: #f8fafc;
+  --slate-950: #ffffff;
+
+  /* darken light accent shades so text stays readable on white */
+  --color-indigo-300: #4f46e5;
+  --color-indigo-400: #4f46e5;
+  --color-cyan-400: #0891b2;
+  --color-emerald-400: #059669;
+  --color-green-400: #16a34a;
+  --color-amber-400: #d97706;
+  --color-yellow-400: #ca8a04;
+  --color-red-400: #dc2626;
+  --color-red-300: #b91c1c;
+  --color-purple-400: #9333ea;
+  --color-blue-400: #2563eb;
+}
+
+
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
-  background-color: #0f172a;
-  color: #f1f5f9;
+  background-color: var(--slate-900);
+  color: var(--slate-100);
+  transition: background-color 0.2s, color 0.2s;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -30,8 +98,8 @@ body {
 /* ─── Scrollbars ─── */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #475569; }
+::-webkit-scrollbar-thumb { background: var(--slate-700); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--slate-600); }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -103,41 +171,41 @@ body {
 
 /* ─── Shimmer skeleton ─── */
 .shimmer {
-  background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+  background: linear-gradient(90deg, var(--slate-800) 25%, var(--slate-700) 50%, var(--slate-800) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
 
 /* ─── Glass card ─── */
 .glass {
-  background: rgba(30, 41, 59, 0.55);
+  background: color-mix(in srgb, var(--slate-800) 55%, transparent);
   backdrop-filter: blur(14px);
-  border: 1px solid rgba(51, 65, 85, 0.5);
+  border: 1px solid color-mix(in srgb, var(--slate-700) 50%, transparent);
 }
 
 /* ─── Prose (markdown in chat) ─── */
 .prose { max-width: none; }
 .prose p  { margin-bottom: 0.6rem; line-height: 1.65; }
-.prose h1 { font-size: 1.2rem; font-weight: 700; color: #f1f5f9; margin: 0.75rem 0 0.35rem; }
-.prose h2 { font-size: 1.05rem; font-weight: 600; color: #f1f5f9; margin: 0.65rem 0 0.3rem; }
-.prose h3 { font-size: 0.95rem; font-weight: 600; color: #e2e8f0; margin: 0.55rem 0 0.25rem; }
+.prose h1 { font-size: 1.2rem; font-weight: 700; color: var(--slate-100); margin: 0.75rem 0 0.35rem; }
+.prose h2 { font-size: 1.05rem; font-weight: 600; color: var(--slate-100); margin: 0.65rem 0 0.3rem; }
+.prose h3 { font-size: 0.95rem; font-weight: 600; color: var(--slate-200); margin: 0.55rem 0 0.25rem; }
 .prose ul  { list-style-type: disc;    padding-left: 1.35rem; margin-bottom: 0.6rem; }
 .prose ol  { list-style-type: decimal; padding-left: 1.35rem; margin-bottom: 0.6rem; }
 .prose li  { margin-bottom: 0.2rem; }
-.prose strong { color: #f1f5f9; font-weight: 600; }
-.prose em     { color: #cbd5e1; }
+.prose strong { color: var(--slate-100); font-weight: 600; }
+.prose em     { color: var(--slate-300); }
 .prose code {
-  background: #0f172a;
+  background: var(--slate-900);
   color: #a78bfa;
   padding: 0.15rem 0.4rem;
   border-radius: 0.3rem;
   font-size: 0.83em;
   font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
-  border: 1px solid #1e293b;
+  border: 1px solid var(--slate-800);
 }
 .prose pre {
-  background: #0f172a;
-  border: 1px solid #334155;
+  background: var(--slate-900);
+  border: 1px solid var(--slate-700);
   border-radius: 0.6rem;
   padding: 0.9rem 1rem;
   overflow-x: auto;
@@ -147,16 +215,16 @@ body {
   background: none;
   border: none;
   padding: 0;
-  color: #e2e8f0;
+  color: var(--slate-200);
 }
 .prose blockquote {
   border-left: 3px solid #6366f1;
   padding-left: 0.8rem;
-  color: #94a3b8;
+  color: var(--slate-400);
   margin: 0.6rem 0;
   font-style: italic;
 }
-.prose hr { border-color: #334155; margin: 0.75rem 0; }
+.prose hr { border-color: var(--slate-700); margin: 0.75rem 0; }
 .prose a  { color: #818cf8; text-decoration: underline; text-underline-offset: 2px; }
 
 /* ─── Range input track ─── */
@@ -164,7 +232,7 @@ input[type=range] { cursor: pointer; }
 input[type=range]::-webkit-slider-runnable-track {
   height: 6px;
   border-radius: 9999px;
-  background: #334155;
+  background: var(--slate-700);
 }
 input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -173,11 +241,11 @@ input[type=range]::-webkit-slider-thumb {
   border-radius: 50%;
   background: #6366f1;
   margin-top: -5px;
-  box-shadow: 0 0 0 2px #0f172a, 0 0 0 3px #6366f1;
+  box-shadow: 0 0 0 2px var(--slate-900), 0 0 0 3px #6366f1;
   transition: box-shadow 0.15s;
 }
 input[type=range]:hover::-webkit-slider-thumb {
-  box-shadow: 0 0 0 2px #0f172a, 0 0 0 4px #6366f1;
+  box-shadow: 0 0 0 2px var(--slate-900), 0 0 0 4px #6366f1;
 }
 
 /* ─── Prism Syntax Highlighting ─── */

@@ -7,6 +7,16 @@
     <meta name="theme-color" content="#0f172a" />
     <meta name="description" content="DocMind AI — Intelligent Document Intelligence, RAG Q&A & Semantic Analysis" />
     <title>DocMind AI — Intelligent Document Intelligence &amp; RAG</title>
+    <script>
+      // apply saved/system theme before first paint to avoid a dark→light flash
+      (function () {
+        try {
+          var saved = JSON.parse(localStorage.getItem('docmind-theme') || '{}').state;
+          var theme = (saved && saved.theme) || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+          if (theme === 'light') document.documentElement.classList.add('light');
+        } catch (e) {}
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />

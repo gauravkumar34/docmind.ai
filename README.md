@@ -21,6 +21,7 @@ The backend is a Spring Boot 4 + Spring AI 2 application. It runs its models **l
 - [Chat memory](#chat-memory)
 - [Security](#security)
 - [Frontend](#frontend)
+- [Future plans / roadmap](#future-plans--roadmap)
 - [Troubleshooting](#troubleshooting)
 
 ---
@@ -346,6 +347,114 @@ The system prompt tells the model to use the document context first. If the cont
 ## Frontend
 
 [docmind-frontend/](docmind-frontend/) is a React 19 + Vite + TypeScript app. It uses Tailwind, Zustand, axios, react-dropzone for uploads, and react-markdown with Prism for rendering answers. It talks to the backend at `http://localhost:8080`. See [docmind-frontend/README.md](docmind-frontend/README.md) for details.
+
+## Future plans / roadmap
+
+DocMind began as a first project with Spring AI. The aim is to grow it from a single-user RAG demo into a production-grade, multi-tenant AI document platform. The plan is split into phases, and each phase builds on the one before.
+
+**Legend:** ✅ done · 🚧 in progress · 📝 planned
+
+### Phase 0: Foundation (current)
+
+- ✅ JWT auth with USER and ADMIN roles
+- ✅ PDF parsing (one document per page) and Tika parsing for other formats
+- ✅ Chunking, Ollama embeddings and pgvector (HNSW, cosine)
+- ✅ Per-user retrieval filtered by `user_id`
+- ✅ Q&A with citations and streaming answers
+- ✅ Chat memory saved in Postgres (`JpaChatMemory`)
+- ✅ React frontend with dark and light mode
+
+### Phase 1: Hardening and production basics
+
+- 📝 **Flyway migrations** instead of `ddl-auto: update`
+- 📝 **Ownership checks** on every document and conversation endpoint (prevent IDOR)
+- 📝 **Delete the vectors** when a document is deleted (`vectorStore.delete(documentId == X)`)
+- 📝 **Conversation APIs**: list, rename and delete chats, and fetch history
+- 📝 **Sliding-window memory**: send only the last N messages, or a summary of older ones, to the model
+- 📝 **Async ingestion** (`@Async`, then a message queue): return `202 Accepted` and push status updates over SSE
+- 📝 **Store the original files** in S3 or MinIO, with only metadata in Postgres
+- 📝 **Refresh tokens** and token revocation (a denylist in Redis)
+- 📝 **Rate limiting and quotas** per user (Bucket4j + Redis)
+- 📝 **Tests**: unit tests with Mockito, and integration tests with **Testcontainers** (`pgvector/pgvector:pg16`)
+- 📝 **Docker image and `docker compose`** for the whole stack (backend, frontend, Postgres, Ollama)
+- 📝 **CI/CD** with GitHub Actions: build, test, image push, deploy
+
+### Phase 2: LLM observability and evaluation
+
+Understanding *why* an answer was good or bad matters as much as producing it.
+
+- 📝 **[Langfuse](https://langfuse.com)**: open-source LLM tracing, prompt management and evaluation. It can be self-hosted with Docker.
+  - Spring AI already reports **Micrometer observations** for ChatClient calls, advisors, embeddings and vector store queries. These can be exported to Langfuse through its **OpenTelemetry** endpoint, so each request shows up as a trace: retrieval → prompt → LLM call, with token counts, latency and cost.
+  - Use Langfuse **prompt management** to version the system prompt instead of hard-coding it in `ProjectConfig`.
+  - Collect user feedback (👍/👎 in the UI) as Langfuse scores.
+- 📝 **Micrometer, Prometheus and Grafana** dashboards: request latency, tokens per user, ingestion throughput, error rates.
+- 📝 **Distributed tracing** (OpenTelemetry → Tempo or Jaeger) across the API, workers and the database.
+- 📝 **RAG evaluation**: a golden set of questions and expected sources, scored with RAGAS-style metrics (faithfulness, answer relevance, context precision and recall). Run it in CI so prompt or chunking changes can't silently make answers worse.
+- 📝 Alternatives to evaluate: **LangSmith**, **Arize Phoenix**, **Helicone**, **OpenLIT**.
+
+### Phase 3: Better retrieval (advanced RAG)
+
+- 📝 **Hybrid search**: combine Postgres full-text search (`tsvector` / BM25) with vector similarity, merged with Reciprocal Rank Fusion
+- 📝 **Re-ranking** with a cross-encoder (e.g. `bge-reranker`, Cohere Rerank): fetch the top 20 chunks, re-rank them, and keep the best 5
+- 📝 **Query rewriting and expansion**: turn follow-up questions into standalone queries using the chat history; Spring AI's `RewriteQueryTransformer`, `CompressionQueryTransformer` and `MultiQueryExpander`
+- 📝 **Spring AI `RetrievalAugmentationAdvisor`**: move to the modular RAG pipeline (query transformers → retrievers → document joiners → post-processors)
+- 📝 **Smarter chunking**: chunks that follow headings and meaning, parent-child chunks, and table-aware PDF parsing
+- 📝 **OCR** for scanned PDFs and images (Tesseract, or a vision model)
+- 📝 **Metadata filters in the UI**: by file type, date or tag
+- 📝 **Semantic cache**: Redis with embeddings, so similar questions return a cached answer
+- 📝 **GraphRAG / knowledge graph** (Neo4j): pull out entities and relationships for questions that span several documents
+
+### Phase 4: Agents and tools
+
+- 📝 **Spring AI tool calling** (`@Tool`): let the model call functions such as *search documents*, *summarise document X*, *compare two documents* or *get document metadata*
+- 📝 **MCP (Model Context Protocol)**:
+  - an **MCP server**, so DocMind's documents can be searched from Claude Desktop, IDEs and other MCP clients
+  - an **MCP client**, so DocMind can use outside tools (web search, Google Drive, Notion, GitHub)
+- 📝 **Structured output**: pull typed data out of documents (invoices, resumes, contracts) into Java records with `.entity(MyRecord.class)`
+- 📝 **Agent workflows** (Spring AI agentic patterns: chain, routing, parallelisation, orchestrator-workers, evaluator-optimizer) for multi-step jobs such as *"read all contracts and list the renewal dates"*
+- 📝 **Guardrails**: `SafeGuardAdvisor`, PII redaction before embedding, and checks against prompt injection in uploaded documents
+
+### Phase 5: Multi-model and multi-modal
+
+- 📝 **Choose a model provider by config**: Ollama (local), OpenAI, Anthropic Claude, Google Gemini, Azure OpenAI, AWS Bedrock, all through Spring AI starters, with a per-request model picker in the UI
+- 📝 **Model routing**: cheap or local models for simple questions and stronger models for complex reasoning, plus a fallback if a provider is down
+- 📝 **Vision**: ask questions about images, charts and diagrams inside PDFs
+- 📝 **Voice**: speech-to-text questions and text-to-speech answers
+- 📝 **Multilingual** documents and answers
+
+### Phase 6: Platform and scale
+
+- 📝 **Multi-tenancy**: organisations and workspaces, a `tenant_id` on every table and in the vector metadata, and Postgres row-level security
+- 📝 **Sharing and permissions**: share documents and chats within a team, with ACL filters at retrieval time
+- 📝 **Connectors**: sync documents from Google Drive, OneDrive, Notion, Confluence, Slack, GitHub and websites
+- 📝 **Event-driven ingestion** with **Kafka** or RabbitMQ and scalable workers
+- 📝 **Dedicated vector database** if pgvector reaches its limits: Qdrant, Weaviate, Milvus or Pinecone (Spring AI supports them all through the same `VectorStore` interface)
+- 📝 **Kubernetes** deployment with a Helm chart, autoscaling, and GPU node pools for model inference
+- 📝 **Usage metering and billing**: tokens, storage, and plans through Stripe
+- 📝 **Admin dashboard**: users, documents, token usage, failed ingestions
+
+### Ecosystem to explore
+
+| Tool / framework | Why it's interesting for DocMind |
+|------------------|----------------------------------|
+| **Spring AI** (current) | Native to Spring Boot. Advisors, a common `VectorStore` interface, tool calling, MCP, observability |
+| **LangChain4j** | The Java port of the LangChain ideas: AI Services, agents and many integrations. Worth comparing with Spring AI, or using for specific features |
+| **LangChain / LangGraph** (Python / JS) | The largest LLM ecosystem. Could run as a separate Python service for experimental pipelines or graph-based agents |
+| **LlamaIndex** | Advanced indexing and document parsing (LlamaParse) for complex PDFs and tables |
+| **Langfuse** | Open-source tracing, prompt versioning and evaluation, which can be self-hosted |
+| **Ollama / vLLM** | Local and self-hosted model serving. vLLM handles high-throughput GPU inference |
+| **Unstructured.io / Docling** | Better parsing of PDFs, tables and layout than plain Tika |
+| **RAGAS / DeepEval / promptfoo** | Automated RAG and prompt evaluation |
+| **Redis** | Semantic cache, rate limiting, token denylist, and its own vector search |
+| **Neo4j** | Knowledge-graph RAG (GraphRAG) |
+| **Kafka** | Event-driven ingestion pipeline at scale |
+| **Keycloak** | Ready-made identity provider: SSO, OAuth2/OIDC, social login |
+
+### Long-term vision
+
+> **DocMind becomes a team's AI knowledge workspace.** Connect your sources, ask questions in natural language, get answers you can trust and check against their sources, and automate document work with agents. It can run fully self-hosted for privacy, or on any cloud LLM provider.
+
+Contributions, ideas and feedback are welcome. Open an issue or a PR.
 
 ## Troubleshooting
 

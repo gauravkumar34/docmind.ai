@@ -123,7 +123,7 @@ const DocumentItem: React.FC<{ doc: DocumentMetadataDto }> = ({ doc }) => {
         </div>
 
         <div className="flex-1 min-w-0">
-          <p className="text-xs font-semibold text-white truncate leading-tight" title={doc.filename}>
+          <p className="text-xs font-semibold text-slate-50 truncate leading-tight" title={doc.filename}>
             {doc.filename}
           </p>
           <div className="flex items-center gap-2 mt-1.5 flex-wrap">
@@ -251,7 +251,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onUploadClick }) => {
                 'flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-indigo-500',
                 sidebarTab === 'documents'
                   ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/30'
-                  : 'text-slate-400 hover:text-white'
+                  : 'text-slate-400 hover:text-slate-50'
               )}
             >
               <FolderOpen className="w-3.5 h-3.5" />
@@ -268,7 +268,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onUploadClick }) => {
                 'flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-indigo-500',
                 sidebarTab === 'chats'
                   ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/30'
-                  : 'text-slate-400 hover:text-white'
+                  : 'text-slate-400 hover:text-slate-50'
               )}
             >
               <MessageSquare className="w-3.5 h-3.5" />
@@ -283,7 +283,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onUploadClick }) => {
             <button
               onClick={handleRefresh}
               aria-label="Refresh content"
-              className="p-1.5 hover:bg-slate-800 rounded-lg transition-colors cursor-pointer text-slate-400 hover:text-white focus-visible:ring-2 focus-visible:ring-indigo-500"
+              className="p-1.5 hover:bg-slate-800 rounded-lg transition-colors cursor-pointer text-slate-400 hover:text-slate-50 focus-visible:ring-2 focus-visible:ring-indigo-500"
               title="Refresh"
             >
               <RefreshCw className={clsx('w-3.5 h-3.5', isLoadingDocuments && 'animate-spin text-indigo-400')} />
@@ -291,7 +291,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onUploadClick }) => {
             <button
               onClick={() => setIsSidebarOpen(false)}
               aria-label="Close sidebar"
-              className="p-1.5 hover:bg-slate-800 rounded-lg transition-colors cursor-pointer text-slate-400 hover:text-white focus-visible:ring-2 focus-visible:ring-indigo-500"
+              className="p-1.5 hover:bg-slate-800 rounded-lg transition-colors cursor-pointer text-slate-400 hover:text-slate-50 focus-visible:ring-2 focus-visible:ring-indigo-500"
               title="Close sidebar"
             >
               <X className="w-3.5 h-3.5" />
@@ -321,7 +321,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onUploadClick }) => {
                 <button
                   onClick={() => setSelectedDocumentId(null)}
                   aria-label="Clear document filter"
-                  className="flex items-center gap-1.5 text-xs text-indigo-300 hover:text-white bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 px-3 py-1.5 rounded-lg transition-all w-full justify-center cursor-pointer focus-visible:ring-2 focus-visible:ring-indigo-500"
+                  className="flex items-center gap-1.5 text-xs text-indigo-300 hover:text-slate-50 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 px-3 py-1.5 rounded-lg transition-all w-full justify-center cursor-pointer focus-visible:ring-2 focus-visible:ring-indigo-500"
                 >
                   <X className="w-3.5 h-3.5" />
                   <span>Clear document filter</span>

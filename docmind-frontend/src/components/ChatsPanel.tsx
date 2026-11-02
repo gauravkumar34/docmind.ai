@@ -121,8 +121,8 @@ const ChatItem: React.FC<{
       className={clsx(
         'group relative flex items-center justify-between gap-2.5 p-3 rounded-xl border transition-all duration-200 cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
         isActive
-          ? 'border-indigo-500/60 bg-indigo-500/10 shadow-sm shadow-indigo-500/10 text-white'
-          : 'border-slate-800 bg-slate-900/50 hover:border-slate-700 hover:bg-slate-850 text-slate-300 hover:text-white'
+          ? 'border-indigo-500/60 bg-indigo-500/10 shadow-sm shadow-indigo-500/10 text-slate-50'
+          : 'border-slate-800 bg-slate-900/50 hover:border-slate-700 hover:bg-slate-850 text-slate-300 hover:text-slate-50'
       )}
     >
       <div className="flex items-start gap-2.5 min-w-0 flex-1">
@@ -144,7 +144,7 @@ const ChatItem: React.FC<{
                 value={editTitle}
                 onChange={(e) => setEditTitle(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="w-full bg-slate-950 border border-indigo-500 text-white text-xs rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                className="w-full bg-slate-950 border border-indigo-500 text-slate-50 text-xs rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-indigo-400"
                 aria-label="Edit chat title"
               />
               <button
@@ -279,7 +279,7 @@ export const ChatsPanel: React.FC = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search conversations..."
-              className="w-full bg-slate-900 border border-slate-800 focus:border-indigo-500 text-white placeholder-slate-500 text-xs rounded-lg pl-8 pr-7 py-1.5 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-colors"
+              className="w-full bg-slate-900 border border-slate-800 focus:border-indigo-500 text-slate-50 placeholder-slate-500 text-xs rounded-lg pl-8 pr-7 py-1.5 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-colors"
             />
             {searchQuery && (
               <button

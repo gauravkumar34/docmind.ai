@@ -45,7 +45,7 @@ export class ErrorBoundary extends Component<Props, State> {
             </div>
 
             <div className="space-y-2">
-              <h2 className="text-xl font-bold text-white tracking-tight">Something went wrong</h2>
+              <h2 className="text-xl font-bold text-slate-50 tracking-tight">Something went wrong</h2>
               <p className="text-sm text-slate-400 leading-relaxed">
                 An unexpected error occurred in the application. You can try refreshing the page or returning home.
               </p>
@@ -69,7 +69,7 @@ export class ErrorBoundary extends Component<Props, State> {
               </button>
               <button
                 onClick={this.handleGoHome}
-                className="flex items-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-white text-sm font-medium rounded-xl transition border border-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500"
+                className="flex items-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 hover:text-slate-50 text-sm font-medium rounded-xl transition border border-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500"
               >
                 <Home className="w-4 h-4" />
                 Home

@@ -109,22 +109,22 @@ const UploadDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose }) => {
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={handleClose} />
 
       {/* Dialog */}
-      <div className="relative z-10 w-full max-w-lg bg-[#1e293b] border border-[#334155] rounded-2xl shadow-2xl shadow-black/50 animate-fade-in">
+      <div className="relative z-10 w-full max-w-lg bg-slate-800 border border-slate-700 rounded-2xl shadow-2xl shadow-black/50 animate-fade-in">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#334155]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-700">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 bg-indigo-500/20 rounded-xl flex items-center justify-center">
               <Upload className="w-4 h-4 text-indigo-400" />
             </div>
             <div>
-              <h2 className="text-base font-semibold text-white">Upload Documents</h2>
+              <h2 className="text-base font-semibold text-slate-50">Upload Documents</h2>
               <p className="text-xs text-slate-400">PDF · DOCX · TXT · MD · CSV</p>
             </div>
           </div>
           <button
             onClick={handleClose}
             disabled={isUploading}
-            className="p-1.5 hover:bg-[#334155] rounded-lg transition-colors text-slate-400 hover:text-white disabled:opacity-40"
+            className="p-1.5 hover:bg-slate-700 rounded-lg transition-colors text-slate-400 hover:text-slate-50 disabled:opacity-40"
           >
             <X className="w-4 h-4" />
           </button>
@@ -138,7 +138,7 @@ const UploadDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose }) => {
               'relative border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-200 overflow-hidden group',
               isDragActive
                 ? 'border-indigo-500 bg-indigo-500/10'
-                : 'border-[#334155] hover:border-indigo-500/50 hover:bg-white/[0.02]'
+                : 'border-slate-700 hover:border-indigo-500/50 hover:bg-slate-50/[0.02]'
             )}
           >
             <input {...getInputProps()} />
@@ -150,12 +150,12 @@ const UploadDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose }) => {
             <div className="relative flex flex-col items-center gap-3">
               <div className={clsx(
                 'w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300',
-                isDragActive ? 'bg-indigo-500/20 scale-110' : 'bg-[#0f172a] group-hover:scale-105'
+                isDragActive ? 'bg-indigo-500/20 scale-110' : 'bg-slate-900 group-hover:scale-105'
               )}>
                 <Upload className={clsx('w-6 h-6 transition-colors', isDragActive ? 'text-indigo-400' : 'text-slate-400')} />
               </div>
               <div>
-                <p className="text-white font-medium">
+                <p className="text-slate-50 font-medium">
                   {isDragActive ? '✨ Drop to upload' : 'Drag & drop files here'}
                 </p>
                 <p className="text-slate-400 text-sm mt-1">
@@ -196,13 +196,13 @@ const UploadDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose }) => {
           {files.length > 0 && (
             <div className="mt-2 space-y-2 max-h-56 overflow-y-auto pr-1">
               {files.map((uf) => (
-                <div key={uf.id} className="flex items-center gap-3 p-3 bg-[#0f172a] rounded-xl border border-[#334155]">
-                  <div className="p-2 bg-[#1e293b] rounded-lg flex-shrink-0">
+                <div key={uf.id} className="flex items-center gap-3 p-3 bg-slate-900 rounded-xl border border-slate-700">
+                  <div className="p-2 bg-slate-800 rounded-lg flex-shrink-0">
                     {getFileIcon(uf.file.name)}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-1.5">
-                      <p className="text-xs text-white font-medium truncate max-w-[200px]">{uf.file.name}</p>
+                      <p className="text-xs text-slate-50 font-medium truncate max-w-[200px]">{uf.file.name}</p>
                       <div className="flex items-center gap-1.5 flex-shrink-0 ml-2">
                         <span className="text-xs text-slate-500">{formatBytes(uf.file.size)}</span>
                         {uf.status === 'pending' && (
@@ -216,13 +216,13 @@ const UploadDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose }) => {
                       </div>
                     </div>
                     {/* Progress bar */}
-                    <div className="w-full bg-[#334155] rounded-full h-1">
+                    <div className="w-full bg-slate-700 rounded-full h-1">
                       <div
                         className={clsx(
                           'h-1 rounded-full transition-all duration-300',
                           uf.status === 'done' ? 'bg-green-500' :
                           uf.status === 'error' ? 'bg-red-500' :
-                          uf.status === 'uploading' ? 'bg-indigo-500' : 'bg-[#334155]'
+                          uf.status === 'uploading' ? 'bg-indigo-500' : 'bg-slate-700'
                         )}
                         style={{ width: uf.status === 'pending' ? '0%' : `${uf.progress}%` }}
                       />
@@ -243,11 +243,11 @@ const UploadDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose }) => {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-end gap-3 px-5 py-4 border-t border-[#334155]">
+        <div className="flex items-center justify-end gap-3 px-5 py-4 border-t border-slate-700">
           <button
             onClick={handleClose}
             disabled={isUploading}
-            className="px-4 py-2 text-sm text-slate-400 hover:text-white border border-[#334155] hover:border-[#475569] rounded-xl transition-colors disabled:opacity-50"
+            className="px-4 py-2 text-sm text-slate-400 hover:text-slate-50 border border-slate-700 hover:border-slate-600 rounded-xl transition-colors disabled:opacity-50"
           >
             {allDone ? 'Close' : 'Cancel'}
           </button>
